@@ -227,8 +227,8 @@ for N in [2, 3, 5, 9, 15, 20]:
     fu.plot_cluster_ts(N, d4, L, CM)
 ```
 
-    /Users/aliaga/py-packs/flexpart-mosaic/nb/funs.py:337: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
-      fig, ax = plt.subplots(subplot_kw=dic, dpi=150)
+    /Users/aliaga/py-packs/flexpart-mosaic/nb/funs.py:335: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+      
 
 
 
