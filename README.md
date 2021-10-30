@@ -1,5 +1,5 @@
 - results are shown here
-  - [cluster_analysis.ipynb](./nb/cluster_analysis.ipynb)
+  - [cluster_analysis.ipynb](./nb/cluster_analysis.md)
 
 region cluster analysis for the mosaic campaign 
 - loosely based on the method described in
