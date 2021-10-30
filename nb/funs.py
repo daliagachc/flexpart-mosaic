@@ -192,7 +192,7 @@ def plot_month_means(d4,L,CM,N,):
     mm = unfilled_markers[2:8] * 4
 
     f, ax = plt.subplots(dpi=100)
-    mea = lt2.resample('30D').mean()
+    mea = lt2.resample('M').mean()
     for i in range(N):
         mea[i].plot(ax=ax, lw=2, alpha=1, marker=mm[i], markersize=10, c=cm(i))
 
