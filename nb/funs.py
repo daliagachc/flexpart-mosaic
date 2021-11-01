@@ -10,7 +10,9 @@ import xarray as xr
 # CM = plt.get_cmap('tab20')
 
 
-def plot_map(da, vmin=None, vmax=None,ax=None,grid=True):
+LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQ'
+
+def plot_map(da, vmin=None, vmax=None, ax=None, grid=True):
     import cartopy.crs as ccrs
 
     # air = xr.tutorial.open_dataset("air_temperature").air
@@ -18,7 +20,7 @@ def plot_map(da, vmin=None, vmax=None,ax=None,grid=True):
     dic = dict(projection=ccrs.Orthographic(0, 90), facecolor="gray")
 
     if ax is None:
-        f,ax = plt.subplots(subplot_kw=dic,)
+        f, ax = plt.subplots(subplot_kw=dic, )
 
     p = da.plot(
         # subplot_kws=dic,
@@ -35,7 +37,7 @@ def plot_map(da, vmin=None, vmax=None,ax=None,grid=True):
     return p
 
 
-def plot_kmap(da, n, CM,ax=None):
+def plot_kmap(da, n, CM, ax=None):
     import cartopy.crs as ccrs
     dic = dict(projection=ccrs.Orthographic(0, 90), facecolor="gray")
 
@@ -54,7 +56,7 @@ def plot_kmap(da, n, CM,ax=None):
         cmap=cmap,
         vmin=-.5,
         vmax=n - .5,
-        ax =ax
+        ax=ax
     )
     #   p.axes.set_global()
     p.axes.coastlines()
@@ -167,8 +169,11 @@ def kmeans_cluster(N, qta, d3, L, TI, ):
 
     ldf = d4.groupby(L).sum().sum(TI).to_series()
 
-    lab_dic = ldf.sort_values(ascending=False
-                              ).reset_index()[L].reset_index().set_index(L)['index'].to_dict()
+    lab_dic0 = ldf.sort_values(ascending=False
+                               ).reset_index()[L].reset_index().set_index(L)['index'].to_dict()
+
+
+    lab_dic = {k: LETTERS[v] for k, v in lab_dic0.items()}
 
     lab = lab.replace(lab_dic)
     lax = lab.to_xarray()
@@ -179,9 +184,9 @@ def kmeans_cluster(N, qta, d3, L, TI, ):
 
     return d4
 
-def plot_month_means(d4,L,CM,N,):
 
-    cm = plt.get_cmap(CM,N)
+def plot_month_means(d4, L, CM, N, ):
+    cm = plt.get_cmap(CM, N)
     lt = d4.groupby(L).sum()
 
     lt2 = lt.to_series().unstack(L)
@@ -194,13 +199,15 @@ def plot_month_means(d4,L,CM,N,):
     f, ax = plt.subplots(dpi=100)
     mea = lt2.resample('M').mean()
     for i in range(N):
-        mea[i].plot(ax=ax, lw=2, alpha=1, marker=mm[i], markersize=10, c=cm(i))
+        l = LETTERS[i]
+        mea[l].plot(ax=ax, lw=2, alpha=1, marker=mm[i], markersize=10, c=cm(i))
 
     ax.legend(loc='upper left', bbox_to_anchor=(1, 1), title='cluster')
     ax.grid()
 
+
 # %%
-def plot_cluster_ts(N, d4, L, CM,fig=None):
+def plot_cluster_ts(N, d4, L, CM, fig=None):
     cm = plt.get_cmap(CM, N)
     fs = (10, N * 2)
     if fig is None:
@@ -211,17 +218,17 @@ def plot_cluster_ts(N, d4, L, CM,fig=None):
     df = d4.groupby(L).sum().to_series().unstack(L)
 
     for i in range(N):
-        df.loc[:, i].plot(ax=axs[i], c=cm(i),label=f'{i}')
+        l = LETTERS[i]
+        df.loc[:, l].plot(ax=axs[i], c=cm(i), label=f'{l}')
 
     for ax in axs:
         ax.grid()
-        ax.set_ylabel('cluster residence\ntime [dayss]')
+        ax.set_ylabel('cluster residence\ntime [days]')
         ax.legend()
 
 
-def plot_cluster_bar(N, d4, L, CM,ax=None):
-
-    cm = plt.get_cmap(CM,N)
+def plot_cluster_bar(N, d4, L, CM, ax=None):
+    cm = plt.get_cmap(CM, N)
     if ax is None:
         f, ax = plt.subplots()
     dd = d4.groupby(L).sum().to_series().unstack(L)
@@ -300,13 +307,10 @@ def get_bounds(LL, d):
     return d4
 
 
-
-
-
 # import geopandas
 # from geopandas import GeoSeries
 
-def plot_hatch(d4,L,N,d1,LA,LO,CM):
+def plot_hatch(d4, L, N, d1, LA, LO, CM):
     import geopandas
 
     import cartopy.crs as ccrs
@@ -317,7 +321,6 @@ def plot_hatch(d4,L,N,d1,LA,LO,CM):
     df = d6[L].to_dataframe()
 
     df = df.loc[:, ~df.columns.duplicated()]
-
 
     G = 'geometry'
 
@@ -339,12 +342,33 @@ def plot_hatch(d4,L,N,d1,LA,LO,CM):
     # cm = plt.get_cmap('tab20', N)
     labs = []
 
-    cm = plt.get_cmap(CM,N)
+    cm = plt.get_cmap(CM, N)
+
     for i in range(N):
-        dg1.loc[[i]].plot(column=L, hatch=hs[i] * 3, ax=ax, transform=ccrs.PlateCarree(),
-                          facecolor='none', edgecolor=cm(i), zorder=10
-                          )
-        p = mpatches.Patch(label=f'{i}', hatch=hs[i] * 3, edgecolor=cm(i), facecolor='none')
+        # print(dg1)
+        l = LETTERS[i]
+        boo = dg1[L] == l
+        dg1[boo].plot(column=L, hatch=hs[i] * 3, ax=ax, transform=ccrs.PlateCarree(),
+                      facecolor='none', edgecolor=cm(i), zorder=10
+                      )
+        p = mpatches.Patch(label=f'{l}', hatch=hs[i] * 3, edgecolor=cm(i), facecolor='none')
         labs.append(p)
     ax.coastlines()
     ax.legend(handles=labs, loc='upper right', bbox_to_anchor=(0, 1))
+
+    ax.set_title(f'{N} CLUSTERS')
+
+
+def get_out_path(i, DATA_OUT):
+    import os
+    fname = f'{i:02d}_clusters_ts.csv'
+    path_out = os.path.join(DATA_OUT, fname)
+    return path_out
+
+
+def save_cluster_csv(d4, N, DATA_OUT, L):
+    pout = get_out_path(N, DATA_OUT)
+
+    csv = d4.groupby(L).sum().to_series().unstack(L)
+
+    csv.to_csv(pout)

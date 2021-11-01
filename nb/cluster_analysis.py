@@ -40,6 +40,7 @@ import matplotlib.pyplot as plt
 import xarray as xr
 
 import funs as fu
+import os 
 
 # %% md [markdown]
 #
@@ -56,6 +57,9 @@ AG = 'age'
 AT = 'AIRTRACER'
 L = 'lab'
 CM = 'tab20'
+
+DATA_OUT = '../data_out'
+
 
 # %% md [markdown]
 #
@@ -125,9 +129,17 @@ fu.plot_map(d3.sum(TI))
 qta = fu.get_quantiles(d3, TI)
 
 # %%
-for N in [2, 3, 5, 9, 15, 20]:
-    d4 = fu.kmeans_cluster(N, qta, d3, L, TI, )
+d4
 
+# %% [markdown]
+# # plot and save cluster from [2, 3, 5, 6, 9, 15, 20]
+
+# %%
+
+for N in [2, 3, 5, 6, 9, 15, 20]:
+# for N in [2]:
+    d4 = fu.kmeans_cluster(N, qta, d3, L, TI, )
+    fu.save_cluster_csv(d4, N, DATA_OUT, L)
     lax = d4[L]
 #     fu.plot_kmap(lax, N, CM)
     fu.plot_hatch(d4, L, N, d1, LA, LO, CM)
