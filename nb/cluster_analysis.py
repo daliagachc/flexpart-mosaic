@@ -128,9 +128,6 @@ fu.plot_map(d3.sum(TI))
 # %%
 qta = fu.get_quantiles(d3, TI)
 
-# %%
-d4
-
 # %% [markdown]
 # # plot and save cluster from [2, 3, 5, 6, 9, 15, 20]
 
