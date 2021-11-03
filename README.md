@@ -6,6 +6,16 @@
     - it depends on the complexity and specificity of the intended analysis 
     - also simplicity is important as simple results are easy to understand 
     - i suggest 5 clusters as a good compromise.  
+- source region identification with inverse modeling for SA, MSA ans IA
+  - results are shown here
+    - [z020_check_sa_ts.md](./nb/z020_check_sa_ts.md)
+  - couple of assumptions that in reality dont hold: 
+    - we assume assumptions from each region are constant in time
+      - this seems to hold for SA and MSA in this case (based on results)
+      - but it does not for IA and therefore "bad region identification"
+  - It is super nice how for
+    - SA we identify the russian big so2 smelters 
+    - MSA almost all of the source regions are oceanic
 # data output 
 - timeseries values for each of the clusters is stored at
   - [data_out](./data_out)
