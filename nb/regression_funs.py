@@ -142,7 +142,8 @@ def plot_map_rect(dd2):
         transform=ccrs.PlateCarree(),
         #     norm=mpl.colors.LogNorm(vmin, vmax),
         robust=True,
-        ax=ax
+        ax=ax,
+        cmap = 'Reds',
     )
     p.axes.set_global()
     p.axes.coastlines()

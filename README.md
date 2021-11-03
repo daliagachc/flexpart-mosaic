@@ -8,7 +8,7 @@
     - i suggest 5 clusters as a good compromise.  
 - source region identification with inverse modeling for SA, MSA ans IA
   - results are shown here
-    - [z020_check_sa_ts.md](./nb/z020_check_sa_ts.md)
+    - [z020_inverse_modeling.ipynb](./nb/z020_inverse_modeling.md)
   - couple of assumptions that in reality dont hold: 
     - we assume assumptions from each region are constant in time
       - this seems to hold for SA and MSA in this case (based on results)
