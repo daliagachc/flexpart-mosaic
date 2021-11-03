@@ -330,7 +330,7 @@ def plot_hatch(d4, L, N, d1, LA, LO, CM):
 
     dg1 = dg[[L, G]].dissolve(by=L).reset_index()
 
-    hs = ['\\', '/', '|', '-', '+'] * 5
+    hs = ['\\\\', '//', '|', '-', '+'] * 5
 
     import matplotlib.patches as mpatches
 
@@ -348,7 +348,7 @@ def plot_hatch(d4, L, N, d1, LA, LO, CM):
         # print(dg1)
         l = LETTERS[i]
         boo = dg1[L] == l
-        dg1[boo].plot(column=L, hatch=hs[i] * 3, ax=ax, transform=ccrs.PlateCarree(),
+        dg1[boo].plot(column=L, hatch=hs[i] * 2, ax=ax, transform=ccrs.PlateCarree(),
                       facecolor='none', edgecolor=cm(i), zorder=10
                       )
         p = mpatches.Patch(label=f'{l}', hatch=hs[i] * 3, edgecolor=cm(i), facecolor='none')

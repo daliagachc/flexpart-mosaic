@@ -1,6 +1,6 @@
 # Results 
 - results are shown here
-  - [cluster_analysis.ipynb](./nb/cluster_analysis.md)
+  - [cluster_analysis.ipynb](./nb/z010_cluster_analysis.md)
   - we try multiple cluster groups [2, 3, 5, 6, 9, 15, 20]
     - the number of cluster groups is always a topic of debate 
     - it depends on the complexity and specificity of the intended analysis 
