@@ -92,7 +92,7 @@ def rank_cluster_inf(cdf):
     above: here we plot the influence of clusters order from highest to lowest.''')
     ax.grid()
 
-def get_pot_inf(cdf, L, ds,PAR):
+def get_plot_inf(cdf, L, ds, PAR):
     cdf.index.name = L
 
     cdic = cdf.to_dict()
@@ -107,14 +107,18 @@ def get_pot_inf(cdf, L, ds,PAR):
     return dd2
 
 
-def plot_map(dd2):
+def plot_map(dd2,ax=None):
     import cartopy.crs as ccrs
 
     # air = xr.tutorial.open_dataset("air_temperature").air
 
     dic = dict(projection=ccrs.Orthographic(0, 90), facecolor="gray")
 
-    f, ax = plt.subplots(subplot_kw=dic, dpi=200)
+    if ax is None:
+        f, ax = plt.subplots(subplot_kw=dic, dpi=200)
+    else:
+        ax =ax
+        f = ax.figure
 
     p = dd2.plot(
         # subplot_kws=dic,
@@ -122,7 +126,8 @@ def plot_map(dd2):
         #     norm=mpl.colors.LogNorm(vmin, vmax),
         robust=True,
         cmap='Reds',
-        ax=ax
+        ax=ax,
+        cbar_kwargs = {'orientation':"horizontal"}
     )
     #   p.axes.set_global()
     p.axes.coastlines()

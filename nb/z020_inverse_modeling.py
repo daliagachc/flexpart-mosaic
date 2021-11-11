@@ -163,7 +163,7 @@ for PAR in [SA,MSA,IA]:
     rfu.scatter_plot(y, yn, pred, MEA, MOD, PAR)
     rfu.mea_vs_mod_plot(y, yn, dp, pred, MEA, MOD)
     rfu.rank_cluster_inf(cdf)
-    dd2 = rfu.get_pot_inf(cdf, L, ds,PAR)
+    dd2 = rfu.get_plot_inf(cdf, L, ds, PAR)
     rfu.plot_map(dd2)
     rfu.plot_map_rect(dd2)
 
