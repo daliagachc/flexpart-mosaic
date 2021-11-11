@@ -10,7 +10,7 @@
   - results are shown here
     - [z020_inverse_modeling.ipynb](./nb/z020_inverse_modeling.md)
   - couple of assumptions that in reality dont hold: 
-    - we assume assumptions from each region are constant in time
+    - we assume emissions from each region are constant in time
       - this seems to hold for SA and MSA in this case (based on results)
       - but it does not for IA and therefore "bad region identification"
   - It is super nice how for
