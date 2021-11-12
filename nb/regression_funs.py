@@ -36,7 +36,7 @@ def elastic_net_reg(dsf, dm, PAR):
     y = dm[PAR]
     yn = y.notna()
     y = y[yn]
-    ii = [.1, .5, .7, .9, .95, .99, 1]
+    ii = [.1, .5, .7, .9, .95, .99, .9999999999999, 1 ]
     regr = ElasticNetCV(cv=5, random_state=0, positive=True, l1_ratio=ii, fit_intercept=False)
 
     regr.fit(XX[yn], y[yn])
