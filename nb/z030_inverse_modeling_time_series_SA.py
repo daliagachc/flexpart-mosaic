@@ -471,10 +471,22 @@ dg2.plot()
 mpol = dg2.unary_union
 
 # %%
+
+# %%
 pols = list(mpol)
 
 # %%
+p1 = pols[0]
+
+# %% tags=[]
+
+# %%
+
+# %%
 pols_se = geopandas.GeoDataFrame(geometry=pols)
+
+# %%
+pols_se.to_file('../data_out/sa_pols.geojson', driver='GeoJSON')  
 
 # %%
 pols_se = pols_se[:]
