@@ -73,8 +73,7 @@ d2 = ds[AT].sum(AG).load()
 # %%
 
 # %%
-
-
+d2.shape
 
 # %%
 # coarse the array to reduce number of data points and also transform the
