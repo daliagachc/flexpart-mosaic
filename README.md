@@ -1,3 +1,9 @@
+### 2022-06-02_23-23-27_
+
+- I have created a nbV2 (version two of this package)
+    - goals
+        - clean up previous code
+
 # Results 
 ### cluster analysis results are shown here
 - [z010_cluster_analysis.ipynb](./nb/z010_cluster_analysis.md)
