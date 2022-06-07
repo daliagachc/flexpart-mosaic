@@ -171,7 +171,7 @@ def _plt_contr_pol(ds,pol_dic,cf):
                           )
             p = mpatches.Patch(
                 label=f'{l}',
-                hatch=hs[i] * 3,
+                hatch=hs[i] * 4,
                 edgecolor=cols[l], facecolor='none')
             labs.append(p)
         ax.coastlines()
@@ -179,7 +179,7 @@ def _plt_contr_pol(ds,pol_dic,cf):
         return ax
     ax = plot_map_pols(dg1, pol_dic)
 
-    _plt(ds, cf.sum(), ax=ax)
+    _plt(ds, cf.mean(), ax=ax)
 
 # %%
 _plt_contr_pol(ds,pol_dic,cf)
@@ -208,6 +208,8 @@ def _plt_ts(pol_dic,cols,df):
 
 _plt_ts(pol_dic,cols,df)
     
+
+# %%
 
 # %%
 
