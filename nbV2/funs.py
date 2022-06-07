@@ -372,3 +372,17 @@ def save_cluster_csv(d4, N, DATA_OUT, L):
     csv = d4.groupby(L).sum().to_series().unstack(L)
 
     csv.to_csv(pout)
+
+def compressed_netcdf_save(ds, path, shuffle=True, complevel=4, fletcher32=True, encode_u=False):
+    encoding = {}
+    for k, v in ds.variables.items():
+        encoding[k] = {
+            'zlib'      : True,
+            'shuffle'   : shuffle,
+            'fletcher32': fletcher32,
+            'complevel' : complevel
+        }
+        if encode_u:
+            if v.dtype.kind == 'U':
+                encoding[k]['dtype'] = 'S1'
+    ds.to_netcdf(path, encoding=encoding)

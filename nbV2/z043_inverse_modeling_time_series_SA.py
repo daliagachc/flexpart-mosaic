@@ -52,6 +52,11 @@ PATH_TO_ST = '../data_in/ciapitof_masked_filtered.csv'
 PATH_200_CLUS = '../data_out/cluster1000.nc'
 
 OUT_FILE = '../data_out2/20_clus_SA_sources_inverse.csv'
+OUT_DS_FILE = '../data_out2/DS_20__SA_sources_inverse.nc'
+OUT_CONTRS_FILE = '../data_out2/CONTRS_20__SA_sources_inverse.csv'
+
+OUT_MEAS_FILE = '../data_out2/MEAS_20__SA_sources_inverse.csv'
+
 
 LA = 'lat'
 LO = 'lon'
@@ -76,6 +81,10 @@ DATA_OUT = '../data_out'
 
 # %%
 PAR = SA
+#
+# %% [markdown]
+# # open and plot PAR timeseries
+
 # %%
 def _get_df():
     df = pd.read_csv(PATH_TO_ST, index_col=0, parse_dates=True)
@@ -86,13 +95,6 @@ def _get_df():
     return df
 
 df = _get_df()
-
-
-# %%
-# df = df['2020-03':]
-
-# %%
-
 
 
 # %%
@@ -155,7 +157,7 @@ dm,dsf = _merge_ds_and_df(ds,df)
 
 
 # %% [markdown]
-# # Invers modeling elastic NET
+# # 1st CV Inverse modeling elastic NET
 
 # %% tags=[]
 # for PAR in [SA,MSA,IA]:
@@ -380,6 +382,9 @@ def _plt_influence_clusters(ds):
                                         vmin=0,vmax=20)
 _plt_influence_clusters(ds)
 
+# %% [markdown]
+# # multi elastic net
+
 # %%
 l
 
@@ -436,6 +441,9 @@ def _multi_plot(aa,CC):
                 spine.set_edgecolor('red')
                 spine.set_linewidth(5)
 _multi_plot(aa,CC)
+
+# %% [markdown]
+# # chosen elastic net
 
 # %%
 pred, cdf, y, yn, dp, regr = elastic_net_reg3(dsf, dm, PAR,aa[CC],LL)
@@ -494,6 +502,9 @@ _plt_influence_clusters(ds)
 # %%
 plot_single_contrs(contrs, nl, yn,y,N)
 
+# %% [markdown]
+# # save data
+
 # %%
 clus_ts = contrs.T.groupby(nl).sum().T[yn].resample('3H').mean()
 
@@ -504,3 +515,12 @@ clus_ts
 clus_ts.to_csv(OUT_FILE)
 
 # %%
+
+# %% tags=[]
+fu.compressed_netcdf_save(ds,OUT_DS_FILE)
+
+# %%
+contrs.to_csv(OUT_CONTRS_FILE)
+
+# %%
+yn.to_csv(OUT_MEAS_FILE)
