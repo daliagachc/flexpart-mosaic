@@ -52,7 +52,7 @@ def elastic_net_reg(dsf, dm, PAR):
     cdf = cdf / xn
     return pred, cdf, y, yn, dp
 
-def elastic_net_reg2(dsf, dm, PAR):
+def elastic_net_reg2(dsf, dm, PAR, l1 = None):
     from sklearn.linear_model import ElasticNetCV
 
     c200 = dsf.columns
@@ -68,9 +68,15 @@ def elastic_net_reg2(dsf, dm, PAR):
     _y = dm[PAR]
     yn = _y.notna()
     y = _y[yn]
-    ii = [.1, .5, .7, .9, .95,
+    
+    if l1 is None:
+        ii = [.1, .5, .7, .9, .95,
           .999, .9999, .99999, .999999, .9999999, 1]
-    regr = ElasticNetCV(cv=5, random_state=0, positive=True, l1_ratio=ii, fit_intercept=False)
+    else:
+        ii = l1
+        
+    regr = ElasticNetCV(
+        cv=5, random_state=0, positive=True, l1_ratio=ii, fit_intercept=False)
 
     regr.fit(XX[yn], y[yn])
 
